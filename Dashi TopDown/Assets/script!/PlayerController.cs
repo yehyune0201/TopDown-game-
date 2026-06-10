@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private Sprite[] currentSprites;
     private int frameIndex = 0;
     private float timer = 0f;
+    public int PlayerHp = 0;
+    public int PlayerAttack = 0;
+
 
     private void Awake()
     {
@@ -25,7 +29,33 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         currentSprites = spriteDown;
         sr.sprite = currentSprites[0];
+
+        moveSpeed = GameDataManager1.Instance.GetPlayerMoveSpeed();
+        PlayerHp = GameDataManager1.Instance.GetPlayerHp();
+        PlayerAttack = GameDataManager1.Instance.GetPlayerAttack();
     }
+
+    void Start()
+    {
+        if(GameDataManager1.Instance.isTutorialFinished == 0)
+        {
+            Debug.Log("튜토리얼 오픈!!");
+            GameDataManager1.Instance.isTutorialFinished = 1;
+        }
+        else
+        {
+            //튜토리얼 했을 경우 아무것도 안 함
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Enemy"))
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
+
 
     public void OnMove(InputValue value)
     {
@@ -99,5 +129,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
         timer = 0f;
         sr.sprite = currentSprites[frameIndex];
     }
+
 
 }
