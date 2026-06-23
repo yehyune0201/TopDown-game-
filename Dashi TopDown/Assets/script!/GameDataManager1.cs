@@ -1,6 +1,6 @@
 using System.IO;
 using UnityEngine;
-
+using System.Linq;
 public class GameDataManager1 : MonoBehaviour
 {
    
@@ -12,8 +12,8 @@ public class GameDataManager1 : MonoBehaviour
 
     public int isTutorialFinished;
 
-
     private string savePath;
+
 
     private void Awake()
     {
@@ -51,7 +51,8 @@ public class GameDataManager1 : MonoBehaviour
 
     public float GetPlayerMoveSpeed()
     {
-        return gameSettingData.playerMoveSpeed;
+        return gameSettingData.playerMoveSpeed +
+        saveData.ItemCount * gameSettingData.moveSpeedBonusPerItem; //
     }
 
     public void SaveGameResult()
@@ -109,70 +110,42 @@ public class GameDataManager1 : MonoBehaviour
     }
     public void DeletePlayerPrefs()
     {
-        PlayerPrefs.DeleteKey("YUTORIAL");
+        PlayerPrefs.DeleteKey("TUTORIAL");
         LoadPlayerPrefs();
 
         Debug.Log("PlayerPrefs 삭제 완료");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    void Start()
+    public void AddItem()
     {
-        
+        saveData.ItemCount++;
+
+        Debug.Log("아이템 카운트 증가: " + saveData.ItemCount);
+
+        SaveJsonData();
     }
 
-    
-    void Update()
+    public int GetItemCount()
     {
-        
+        return saveData.ItemCount;
     }
+
+    public bool HasItem(string itemId)
+    {
+        return saveData.collectedItemIds.Contains(itemId);
+    }
+
+    public void AddCollectedItem(string itemId)
+    {
+        if (HasItem(itemId)) return;
+
+        saveData.ItemCount++;
+
+        var list = saveData.collectedItemIds.ToList();
+        list.Add(itemId);
+        saveData.collectedItemIds = list.ToArray();
+
+        SaveJsonData();
+    }
+
 }

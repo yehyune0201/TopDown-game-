@@ -50,9 +50,18 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
-            GameManager.Instance.GameOver();
+            GameOverUI gameOverUI = FindFirstObjectByType<GameOverUI>();
+
+            if (gameOverUI != null)
+            {
+                gameOverUI.ShowGameOver();
+            }
+            else
+            {
+                Debug.LogError("GameOverUI가 씬에 없습니다!");
+            }
         }
     }
 
@@ -129,6 +138,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
         timer = 0f;
         sr.sprite = currentSprites[frameIndex];
     }
-
+    public void SpeedUp(float value)
+    {
+        moveSpeed += value;
+        velocity = input.normalized * moveSpeed;
+    }
 
 }

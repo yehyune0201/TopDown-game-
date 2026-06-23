@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public string titleSceneName = "TitleScene";
-    public string gameSceneName = "GameScene";
+
+    public string gameSceneName = "ForestScene";
+
+    public string endingSceneName = "Ending";
 
     public void Awake()
     {
@@ -26,37 +27,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(gameSceneName);
     }
 
-    public void GameOver()
+    public void SaveDeath()
     {
         GameDataManager1.Instance.SaveGameResult();
-        GoTitle();
     }
+
     public void GoTitle()
     {
-        SceneManager.LoadScene(titleSceneName);
+        SceneManager.LoadScene("Title");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void GoEnding()
+    {
+        SceneManager.LoadScene(endingSceneName);
+    }
 }
