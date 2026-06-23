@@ -1,8 +1,8 @@
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
+
+
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms.Impl;
+
 public class NewMonoBehaviourScript : MonoBehaviour
 {
     public float moveSpeed = 5f;
