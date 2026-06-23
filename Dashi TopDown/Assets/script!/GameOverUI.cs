@@ -3,9 +3,16 @@ using UnityEngine;
 
 public class GameOverUI : MonoBehaviour
 {
+    public static GameOverUI Instance;
+
     public GameObject gameOverPanel;
 
     private bool isGameOver = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void ShowGameOver()
     {
@@ -19,14 +26,7 @@ public class GameOverUI : MonoBehaviour
     {
         GameManager.Instance.SaveDeath();
 
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("GameOverPanel이 연결되지 않았습니다!");
-        }
+        gameOverPanel.SetActive(true);
 
         yield return new WaitForSecondsRealtime(2f);
 

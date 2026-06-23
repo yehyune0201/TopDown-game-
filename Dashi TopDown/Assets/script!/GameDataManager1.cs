@@ -108,12 +108,17 @@ public class GameDataManager1 : MonoBehaviour
 
         Debug.Log("PlayerPrefs 저장 완료");
     }
-    public void DeletePlayerPrefs()
+    public void ResetGameData()
     {
-        PlayerPrefs.DeleteKey("TUTORIAL");
-        LoadPlayerPrefs();
+        saveData = new SaveData();
+        SaveJsonData();
 
-        Debug.Log("PlayerPrefs 삭제 완료");
+        if (GameUI.Instance != null)
+        {
+            GameUI.Instance.RefreshUI();
+        }
+
+        Debug.Log("게임 데이터 초기화 완료");
     }
 
     public void AddItem()
@@ -147,5 +152,5 @@ public class GameDataManager1 : MonoBehaviour
 
         SaveJsonData();
     }
-
+   
 }

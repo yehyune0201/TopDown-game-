@@ -41,4 +41,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(endingSceneName);
     }
+
+    public void ResetSaveData()
+    {
+        GameDataManager1.Instance.ResetGameData();
+    }
 }
